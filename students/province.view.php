@@ -31,7 +31,7 @@ $province = new province($db);
                         <td class='text-center'>
                             <a href="province.edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                             |
-                            <a href="student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
+                            <a href="../province_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>

@@ -51,5 +51,27 @@ class Province {
             throw $e;
         }
     }
+    public function delete($id) {
+        try {
+            $this->db->getConnection()->beginTransaction();
+    
+            $province_sql = "DELETE FROM province WHERE id = :id"; 
+            $province_stmt = $this->db->getConnection()->prepare($province_sql); 
+            $province_stmt->bindValue(':id', $id);
+            $province_stmt->execute();
+    
+            $this->db->getConnection()->commit();
+    
+            if ($province_stmt->rowCount() > 0) {
+                return true; 
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            $this->db->getConnection()->rollBack();
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
 }
 ?>

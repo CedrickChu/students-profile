@@ -30,7 +30,7 @@ $city = new TownCity($db);
                         <td class='text-center'>
                             <a href="town_city.edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                             |
-                            <a href="student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
+                            <a href="../town_city.delete.php?id=<?php echo $result['id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>

@@ -39,18 +39,37 @@ class TownCity {
             throw $e;
         }
     }
+    public function delete($id) {
+        try {
+            $this->db->getConnection()->beginTransaction();
+    
+            $town_city_sql = "DELETE FROM town_city WHERE id = :id"; 
+            $town_city_stmt = $this->db->getConnection()->prepare($town_city_sql); 
+            $town_city_stmt->bindValue(':id', $id);
+            $town_city_stmt->execute();
+    
+            $this->db->getConnection()->commit();
+    
+            if ($town_city_stmt->rowCount() > 0) {
+                return true; 
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            $this->db->getConnection()->rollBack();
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
     public function getCityById($id) {
         try {
-            // Use a WHERE clause in your SQL query to filter by ID
             $sql = "SELECT id, name FROM town_city WHERE id = :id";
             $stmt = $this->db->getConnection()->prepare($sql);
             
-            // Bind the parameter
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         
             $stmt->execute(); 
         
-            // Fetch the city information
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
