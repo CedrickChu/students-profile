@@ -4,7 +4,7 @@ include_once("../province.php");
 $db = new Database();
 $provinceManager = new Province($db); 
 
-include 'base.php';
+include '../record_table/base.php';
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];

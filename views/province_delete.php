@@ -1,6 +1,5 @@
 <?php
-
-include "province.php";
+include "../province.php";
 $db = new Database();
 $connection = $db->getConnection();
 $province = new Province($db);
@@ -12,7 +11,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     if ($delete_result) {
         echo "<script>alert('Province record with ID: " . $id . " has been successfully Deleted!');";
-        echo "window.location.href = 'students/province.view.php';</script>";
+        echo "window.location.href = '../record_table/province.view.php';</script>";
     } else {
         echo 'ERROR: Unable to delete province record.';
     }

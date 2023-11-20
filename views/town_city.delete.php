@@ -1,6 +1,6 @@
 <?php
 
-include "town_city.php";
+include "../town_city.php";
 $db = new Database();
 $connection = $db->getConnection();
 $town_city = new TownCity($db);
@@ -12,7 +12,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
     if ($delete_result) {
         echo "<script>alert('Town City record with ID: " . $id . " has been successfully Deleted!');";
-        echo "window.location.href = 'students/town_city.view.php';</script>";
+        echo "window.location.href = '../record_table/town_city.view.php';</script>";
     } else {
         echo 'ERROR: Unable to delete student record.';
     }

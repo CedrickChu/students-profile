@@ -1,27 +1,26 @@
 <?php
 include_once("../db.php");
-include_once("../province.php");
+include_once("../town_city.php");
 $db = new Database();
-$province = new province($db); 
+$city = new TownCity($db); 
 ?>
-
-<?php  include 'base.php'; ?>
+    <?php  include 'base.php'; ?>
     <div class="content-center">
         <div class="container container-fluid mx-auto">
             <table id='data-table' class="table table-striped table-dark table-bordered">
                 <thead>
                     <tr>
-                        <th class='text-center' colspan='3'><h3>PROVINCE</h3></th>
+                        <th class='text-center' colspan='3'><h3>TOWN CITY</h3></th>
                     </tr>
                     <tr>
-                        <th class='text-center'>PROVINCE ID</th>
-                        <th class='text-center'>PROVINCE NAME</th>
-                        <th class='text-center'>Action</th>
+                        <th class='text-center'>TOWN CITY ID</th>
+                        <th class='text-center'>TOWN CITY NAME</th>
+                        <th class='text-center'>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $results = $province->getAll(); 
+                    $results = $city->getAll(); 
                     foreach ($results as $result) {
                     ?>
                     <tr>
@@ -29,17 +28,23 @@ $province = new province($db);
                         <td class='text-center'><?php echo $result['name']; ?></td>
                         
                         <td class='text-center'>
-                            <a href="province.edit.php?id=<?php echo $result['id']; ?>">Edit</a>
+                            <a href="../views/town_city.edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                             |
-                            <a href="../province_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
+                            <a href="../views/town_city.delete.php?id=<?php echo $result['id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
+
+                    
                 </tbody>
             </table>
         </div>
-        <a class="button-link" href="student_add.php">Add New Record</a>
     </div>
+    <a class="button-link" href="student_add.php">Add New Record</a>
+
+        </div>
+        
+    <?php include('../templates/footer.html'); ?>
     <p></p>
 </body>
 </html>

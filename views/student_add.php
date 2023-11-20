@@ -6,8 +6,6 @@ include_once("../town_city.php");
 include_once("../province.php");
 
 
-
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = [    
     'student_number' => $_POST['student_number'],
@@ -51,91 +49,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+    <?php include('../students/base.php'); ?>
+    <div class="content-center">
+        <h1>Add Student Data</h1>
+        <form action="" method="post">
+            <label for="student_number">Student Number:</label>
+            <input type="text" name="student_number" id="student_number" required><br>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+            <label for="first_name">First Name:</label>
+            <input type="text" name="first_name" id="first_name" required><br>
 
-    <title>Add Student Data</title>
-</head>
-<body>
-    <!-- Include the header and navbar -->
-    <?php include('../templates/header.html'); ?>
-    <?php include('../includes/navbar.php'); ?>
+            <label for="middle_name">Middle Name:</label>
+            <input type="text" name="middle_name" id="middle_name">
 
-    <div class="content">
-    <h1>Add Student Data</h1>
-    <form action="" method="post" class="centered-form">
-        <label for="student_number">Student Number:</label>
-        <input type="text" name="student_number" id="student_number" required>
+            <label for="last_name">Last Name:</label>
+            <input type="text" name="last_name" id="last_name" required><br>
 
-        <label for="first_name">First Name:</label>
-        <input type="text" name="first_name" id="first_name" required>
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender" required><br>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+            <label for="birthday">Birthdate:</label>
+            <input type="date" name="birthday" id="birthday" required><br>
 
-        <label for="middle_name">Middle Name:</label>
-        <input type="text" name="middle_name" id="middle_name">
+            <label for="contact_number">Contact Number:</label>
+            <input type="text" id="contact_number" name="contact_number" required><br>
 
-        <label for="last_name">Last Name:</label>
-        <input type="text" name="last_name" id="last_name" required>
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required><br>
 
-        <label for="gender">Gender:</label>
-        <select name="gender" id="gender" required>
-            <option value="0">Male</option>
-            <option value="1">Female</option>
-        </select>
+            <label for="town_city">Town / City:</label>
+            <select name="town_city" id="town_city" required><br>
+            <?php
 
-        <label for="birthday">Birthdate:</label>
-        <input type="date" name="birthday" id="birthday" required>
+                $database = new Database();
+                $towns = new TownCity($database);
+                $results = $towns->getAll();
+                // echo print_r($results);
+                foreach($results as $result)
+                {
+                    echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
+                }
+            ?>      
+            </select>
 
-        <label for="contact_number">Contact Number:</label>
-        <input type="text" id="contact_number" name="contact_number" required>
+            <label for="province">Province:</label>
+            <select name="province" id="province" required>
+            <?php
 
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street" required>
+                $database = new Database();
+                $provinces = new Province($database);
+                $results = $provinces->getAll();
+                foreach($results as $result)
+                {
+                    echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
+                }
+            ?>  
+            </select>    
 
-        
+            <label for="zip_code">Zip Code:</label>
+            <input type="text" id="zip_code" name="zip_code" required>
 
-        <label for="town_city">Town / City:</label>
-        <select name="town_city" id="town_city" required>
-        <?php
-
-            $database = new Database();
-            $towns = new TownCity($database);
-            $results = $towns->getAll();
-            // echo print_r($results);
-            foreach($results as $result)
-            {
-                echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
-            }
-        ?>      
-        </select>
-
-        <label for="province">Province:</label>
-        <select name="province" id="province" required>
-        <?php
-
-            $database = new Database();
-            $provinces = new Province($database);
-            $results = $provinces->getAll();
-            // echo print_r($results);
-            foreach($results as $result)
-            {
-                echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
-            }
-        ?>  
-        </select>    
-
-        <label for="zip_code">Zip Code:</label>
-        <input type="text" id="zip_code" name="zip_code" required>
-
-        
+            
 
 
-        <input type="submit" value="Add Student">
-    </form>
+            <input type="submit" value="Add Student">
+        </form>
     </div>
     
     <?php include('../templates/footer.html'); ?>

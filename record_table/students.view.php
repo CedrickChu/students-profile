@@ -50,9 +50,9 @@ $student = new Student($db);
                             <td colspan="2"><?php echo $result['contact_number']; ?></td>
                             <td colspan="2"><?php echo $result['ADDRESS']; ?></td>
                             <td colspan="2" class='text-center'>
-                                <a href="student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
+                                <a href="../views/student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                                 |
-                                <a href="../student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
+                                <a href="../views/student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>
                             </td>
                             <?php
                             ?>
