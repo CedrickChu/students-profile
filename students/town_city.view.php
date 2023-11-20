@@ -10,7 +10,7 @@ $city = new TownCity($db);
             <table id='data-table' class="table table-striped table-dark table-bordered">
                 <thead>
                     <tr>
-                        <th class='text-center' colspan="3">Student Records</th> 
+                        <th class='text-center' colspan='3'><h3>TOWN CITY</h3></th>
                     </tr>
                     <tr>
                         <th class='text-center'>TOWN CITY ID</th>
@@ -45,25 +45,6 @@ $city = new TownCity($db);
         </div>
         
     <?php include('../templates/footer.html'); ?>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggleBtns = document.querySelectorAll('#theme-toggle');
-
-            themeToggleBtns.forEach((btn) => {
-                btn.addEventListener('click', () => {
-                    document.body.classList.toggle('light-mode');
-
-                    // Corrected: Get the element by ID and toggle the 'table-dark' class
-                    var studentTable = document.getElementById("data-table");
-                    if (studentTable) {
-                        studentTable.classList.toggle("table-dark");
-                    }
-                });
-            })
-        });
-    </script>
-
-
     <p></p>
 </body>
 </html>
