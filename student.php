@@ -134,46 +134,44 @@ class Student {
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+
+    public function getStudentById($id) {
+        try {
+            $sql = "SELECT
+                s.id as id,
+                s.student_number as student_number,
+                s.first_name as first_name,
+                s.middle_name as middle_name,
+                s.last_name as last_name,
+                s.gender as gender,
+                sd.zip_code as zip_code,
+                s.birthday as birthday,
+                sd.contact_number as contact_number,
+                sd.street as street,
+                tc.name as town_city,
+                p.name as province
+            FROM
+                students s
+            JOIN
+                student_details sd ON s.id = sd.student_id
+            JOIN
+                town_city tc ON sd.town_city = tc.id
+            JOIN
+                province p ON sd.province = p.id
+            WHERE s.id = :id
+            LIMIT 100";
     
-        public function getStudentById($id) {
-            try {
-                $sql = "SELECT
-                    s.id as id,
-                    s.student_number as student_number,
-                    s.first_name as first_name,
-                    s.middle_name as middle_name,
-                    s.last_name as last_name,
-                    s.gender as gender,
-                    sd.zip_code as zip_code,
-                    s.birthday as birthday,
-                    sd.contact_number as contact_number,
-                    sd.street as street,
-                    tc.name as town_city,
-                    p.name as province
-                FROM
-                    students s
-                JOIN
-                    student_details sd ON s.id = sd.student_id
-                JOIN
-                    town_city tc ON sd.town_city = tc.id
-                JOIN
-                    province p ON sd.province = p.id
-                WHERE s.id = :id
-                LIMIT 100";
-        
-                $stmt = $this->db->getConnection()->prepare($sql);
-                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        
-                $stmt->execute(); // Execute the prepared statement
-        
-                // Fetch the result as an associative array
-                return $stmt->fetch(PDO::FETCH_ASSOC);
-            } catch (PDOException $e) {
-                // Handle any potential errors here
-                echo "Error: " . $e->getMessage();
-                throw $e; // Re-throw the exception for higher-level handling
-            }
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $stmt->execute(); // Execute the prepared statement
+    
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e; 
         }
+    }
         
     
 
