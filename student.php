@@ -38,6 +38,37 @@ class Student {
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+    public function delete($id) {
+        try {
+            $this->db->getConnection()->beginTransaction();
+    
+            $detailSql = "DELETE FROM student_details WHERE student_id = :id";
+            $detailStmt = $this->db->getConnection()->prepare($detailSql);
+            $detailStmt->bindValue(':id', $id);
+            $detailStmt->execute(); 
+    
+           
+            $studentSql = "DELETE FROM students WHERE id = :id";
+            $studentStmt = $this->db->getConnection()->prepare($studentSql);
+            $studentStmt->bindValue(':id', $id);
+            $studentStmt->execute();
+    
+            
+            $this->db->getConnection()->commit();
+    
+           
+            if ($studentStmt->rowCount() > 0) {
+                return true; // Record deleted successfully
+            } else {
+                return false; 
+            }
+        } catch (PDOException $e) {
+           
+            $this->db->getConnection()->rollBack();
+            echo "Error: " . $e->getMessage();
+            throw $e; 
+        }
+    }
 
     public function read($id) {
         try {

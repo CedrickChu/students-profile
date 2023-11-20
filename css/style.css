@@ -38,6 +38,7 @@ body{
     font-family: 'General Sans', sans-serif;
     background-color: var(--clr-dark);
     color: var(--clr-light);
+    display: flex;
 }
 body.light-mode{
     /* colors */
@@ -74,7 +75,22 @@ a {
 strong {
     color: var(--clr-blue)
 }
-table{
-    width: 70%!important;
-    margin: auto!important;
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black!important;
+    width: 100%;
+    overflow-x: hidden;
+    table-layout: fixed;
+
+  }
+  td {
+    word-wrap: break-word;
+    text-align: center;
+    vertical-align: middle;
 }
+  
+  th, td {
+    border: 1px solid black!important; 
+    text-align: left;
+  }

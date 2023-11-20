@@ -1,27 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Records</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/utils.css">
-    <link rel="stylesheet" type="text/css" href="css/header.css">
-    <link rel="stylesheet" type="text/css" href="css/modern-normalize.css">
-    <script type="module" src="js/theme_toggle.js"></script>
-</head>
-<body>
-    <main>
-        <?php include 'templates/header.html'; ?>
-
 <?php
-include_once("db.php");
-include ("student.php");
+include_once("../db.php");
+include_once("../student.php");
 $db = new Database();
 $connection = $db->getConnection();
 $student = new Student($db);
-
+include 'base.php';
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
 
@@ -60,8 +43,10 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             </select><br>
                         </div>
                         <div class='form-group'>
-                            <label for='birthday'>BIRTHDAY: </label>
-                            <input class='form-control' type='text' name='birthday' value="<?php echo $result['birthday']; ?>" required><br>
+                            <label for="birthday">Birthday:</label>
+                            <input class='form-control' type="date" id="start" name="trip-start"
+                                value="<?php echo date('Y-m-d', strtotime($result['birthday'])); ?>"
+                                min="1960-01-01" max="2026-12-31" /><br>
                         </div>
                         <div class='form-group'>
                             <label for='contact_number'>CONTACT NUMBER: </label>
@@ -169,7 +154,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
                         if ($result) {
                             echo "<script>alert('Student record with ID: " . $id . " has been successfully edited!');</script>";
-                            echo "window.location.href = './students/students.view.php';";
                         } else {
                             echo "<script>alert('Error updating record.');</script>";
                         }
@@ -178,7 +162,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     }
                 }
                 ?>
-
         </div>
         <?php
     } else {
