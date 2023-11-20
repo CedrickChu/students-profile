@@ -58,11 +58,11 @@ svg{
     max-width: 100%;
     user-select: none;
 }
-button{
+.button{
     display: inline-block;
     padding: 0;
     border: none;
-    background: none;
+    background: var(--clr-red)!important;
     cursor: pointer;
 }
 

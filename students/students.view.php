@@ -20,7 +20,7 @@ $student = new Student($db);
                     <th>BIRTHDAY</th>
                     <th>CONTACT NUMBER</th>
                     <th colspan="2">ADDRESS</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                     
                 </tr>
             </thead>
@@ -47,7 +47,7 @@ $student = new Student($db);
                     <td><?php echo $result['birthday']; ?></td>
                     <td><?php echo $result['contact_number']; ?></td>
                     <td colspan="2"><?php echo $result['ADDRESS']; ?></td>
-                    <td>
+                    <td colspan="2">
                         <a href="../student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                         |
                         <a href="../student_delete.php?id=<?php echo $result['id']; ?>">Delete</a>

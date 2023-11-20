@@ -59,14 +59,23 @@ class Student {
 
     public function update($id, $data) {
         try {
-            $sql = "UPDATE students SET
-                    student_number = :student_number,
-                    first_name = :first_name,
-                    middle_name = :middle_name,
-                    last_name = :last_name,
-                    gender = :gender,
-                    birthday = :birthday
-                    WHERE id = :id";
+            $sql = "UPDATE students s
+                    JOIN student_details sd ON s.id = sd.student_id
+                    JOIN town_city tc ON sd.town_city = tc.id
+                    JOIN province p ON sd.province = p.id
+                    SET
+                        s.student_number = :student_number,
+                        s.first_name = :first_name,
+                        s.middle_name = :middle_name,
+                        s.last_name = :last_name,
+                        s.gender = :gender,
+                        s.birthday = :birthday,
+                        sd.zip_code = :zip_code,
+                        sd.contact_number = :contact_number,
+                        sd.street = :street,
+                        tc.name = :town_city,  
+                        p.name = :province     
+                    WHERE s.id = :id";
     
             $stmt = $this->db->getConnection()->prepare($sql);
     
@@ -77,7 +86,12 @@ class Student {
             $stmt->bindValue(':last_name', $data['last_name']);
             $stmt->bindValue(':gender', $data['gender']);
             $stmt->bindValue(':birthday', $data['birthday']);
-           
+            $stmt->bindValue(':zip_code', $data['zip_code']);
+            $stmt->bindValue(':contact_number', $data['contact_number']);
+            $stmt->bindValue(':street', $data['street']);
+            $stmt->bindValue(':town_city', $data['town_city']);  
+            $stmt->bindValue(':province', $data['province']);    
+            $stmt->bindValue(':id', $id);
     
             // Execute the query
             $stmt->execute();
@@ -88,7 +102,8 @@ class Student {
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
-        }
+    }
+    
         public function getStudentById($id) {
             try {
                 $sql = "SELECT
