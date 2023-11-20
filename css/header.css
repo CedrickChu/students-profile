@@ -68,7 +68,7 @@
         left: 0;
         padding: 30px 0 0;
         background-color: rgb(29, 29, 29);
-        width: 240px;
+        width: 200px!important;
         z-index: 999999999;
         overflow: hidden;
         
