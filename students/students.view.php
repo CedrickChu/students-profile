@@ -8,7 +8,7 @@ $student = new Student($db);
         <?php  include 'base.php'; ?>
         <div class="content-center">
             <div class="container container-fluid mx-auto">
-                <table id='student-table' class="table table-striped table-dark table-bordered">
+                <table id='data-table' class="table table-striped table-dark table-bordered">
                     <thead>
                         <tr>
                             <th class='text-center' colspan="14">STUDENT'S RECORD</th>
@@ -63,6 +63,23 @@ $student = new Student($db);
             </div>
             <a class="button-link" href="student_add.php">Add New Record</a>
         </div>  
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const themeToggleBtns = document.querySelectorAll('#theme-toggle');
+
+                themeToggleBtns.forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        document.body.classList.toggle('light-mode');
+
+                        // Corrected: Get the element by ID and toggle the 'table-dark' class
+                        var studentTable = document.getElementById("data-table");
+                        if (studentTable) {
+                            studentTable.classList.toggle("table-dark");
+                        }
+                    });
+                })
+            });
+        </script>
           
         
         <p></p>

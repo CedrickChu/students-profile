@@ -8,7 +8,7 @@ $province = new province($db);
 <?php  include 'base.php'; ?>
     <div class="content-center">
         <div class="container container-fluid mx-auto">
-            <table id='province-table' class="table table-striped table-dark table-bordered">
+            <table id='data-table' class="table table-striped table-dark table-bordered">
                 <thead>
                     <tr>
                         <th class='text-center' colspan='3'> PROVINCE </th>
@@ -35,8 +35,6 @@ $province = new province($db);
                         </td>
                     </tr>
                 <?php } ?>
-
-                
                 </tbody>
             </table>
         </div>
@@ -44,6 +42,23 @@ $province = new province($db);
     </div>
        
     <?php include('../templates/footer.html'); ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtns = document.querySelectorAll('#theme-toggle');
+
+            themeToggleBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-mode');
+
+                    // Corrected: Get the element by ID and toggle the 'table-dark' class
+                    var studentTable = document.getElementById("data-table");
+                    if (studentTable) {
+                        studentTable.classList.toggle("table-dark");
+                    }
+                });
+            })
+        });
+    </script>
 
 
     <p></p>
