@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']))
 ?>
 <?php include '../record_table/base.php' ?>
     <div class="container-sm">
-        <h2>Edit Student</h2>
+        <h2>ADD STUDENT</h2>
         <form action="" method="post">
             <div class='row'>
                 <div class='col'>

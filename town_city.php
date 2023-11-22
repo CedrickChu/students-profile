@@ -28,7 +28,20 @@ class TownCity {
         } catch (PDOException $e) {
             throw $e;
         }
-    }   
+    }
+    public function create($data){
+        try {
+            $sql = "INSERT INTO town_city (name) VALUES (:name)";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(":name", $data["name"], PDO::PARAM_STR);
+    
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
+
     
 
     public function update($id, $data) {

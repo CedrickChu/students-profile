@@ -53,7 +53,7 @@ $province = new province($db);
                     <a href="?page=<?php echo $currentpage + 1; ?>">Next &raquo;</a>
                 <?php endif; ?>
             </div>
-            <a  href="../views/student_add.php">
+            <a  href="../views/province_add.php">
                 <button class="btn btn-fill btn-danger">Add New Record</button>
             </a>
         </div>

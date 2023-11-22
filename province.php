@@ -63,6 +63,18 @@ class Province {
             throw $e;
         }
     }
+    public function create($data){
+        try {
+            $sql = "INSERT INTO province (name) VALUES (:name)";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(":name", $data["name"], PDO::PARAM_STR);
+    
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
     public function update($id, $data) {
         try {
             $sql = "UPDATE province SET name = :name WHERE id = :id";
