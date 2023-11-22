@@ -89,9 +89,17 @@ table {
   .btn:hover{
     background-color:#32688b!important;
   }
-  a:hover{
-    color: #32688b!important;
+  a:hover{  
+    color: rgb(136, 0, 255)!important;
   }
   a{
     text-decoration: none;
+  }
+  .dropdown-menu {
+    display: none !important;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block !important;
+    background-color: ""!important;
   }

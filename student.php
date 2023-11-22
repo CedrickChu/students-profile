@@ -254,7 +254,25 @@ class Student {
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+    public function getTotalRowCountByTownCity($townCityId) {
+        $sql = "SELECT COUNT(*) as total FROM students s
+                  JOIN student_details sd ON s.id = sd.student_id
+                  WHERE sd.town_city = :townCityId";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bindParam(":townCityId", $townCityId, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'];
+    }
+    public function getStudentsByTownCity($townCityId) {
+        $sql= "SELECT s.id, s.first_name, s.middle_name, s.last_name, s.gender
+                  FROM students s
+                  JOIN student_details sd ON s.id = sd.student_id
+                  WHERE sd.town_city = :townCityId";
+        $stmt = $this->db->getConnection()->prepare($sql);
+        $stmt->bindParam(":townCityId", $townCityId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
- 
-
 ?>
