@@ -72,6 +72,7 @@ if (!empty($labels) && !empty($data)) {
     echo "No data available for chart.";
 }
 ?>
+<table id='data-table'></table>
 </main>
 </body>
 </html>

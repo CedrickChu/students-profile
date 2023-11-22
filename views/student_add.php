@@ -132,5 +132,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']))
         </form>
     </div>
     <?php include('../templates/footer.html'); ?>
+    <table id='data-table'></table>
 </body>
 </html>

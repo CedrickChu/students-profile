@@ -99,6 +99,7 @@ if (!empty($months) && (!empty($maleData) || !empty($femaleData))) {
     echo "No data available for chart.";
 }
 ?>
+<table id='data-table'></table>
 </main>
 </body>
 </html>

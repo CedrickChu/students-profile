@@ -53,6 +53,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 ?>
 
 <p></p>
+<table id='data-table'></table>
 </main>
 </body>
 </html>

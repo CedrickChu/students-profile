@@ -30,6 +30,7 @@ foreach ($results as $row) {
 ?>
 
 <?php
+
 if (!empty($years) && (!empty($maleData) || !empty($femaleData))) {
     include 'base.php';
     ?>
@@ -90,6 +91,7 @@ if (!empty($years) && (!empty($maleData) || !empty($femaleData))) {
     echo "No data available for chart.";
 }
 ?>
+<table id='data-table'></table>
 </main>
 </body>
 </html>
