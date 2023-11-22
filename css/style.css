@@ -86,3 +86,12 @@ table {
     border: 1px solid black!important; 
     text-align: left;
   }
+  .btn:hover{
+    background-color:#32688b!important;
+  }
+  a:hover{
+    color: #32688b!important;
+  }
+  a{
+    text-decoration: none;
+  }

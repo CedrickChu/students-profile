@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../css/header.css">
     <link rel="stylesheet" type="text/css" href="../css/modern-normalize.css">
     <script type="module" src="../js/theme_toggle.js"></script>
+    <script type="module" src="../js/search.js"></script>
 </head>
 <body>
     <main>

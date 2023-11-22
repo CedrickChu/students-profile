@@ -21,7 +21,14 @@ $province = new province($db);
                 </thead>
                 <tbody>
                     <?php
-                    $results = $province->getAll(); 
+                    $recordsPerPage = 10;
+                    $totalRowCount = $province->getTotalRowCount();
+                    $totalPages = ceil($totalRowCount / $recordsPerPage);
+                    
+                    $currentpage = isset($_GET['page']) ? $_GET['page'] : 1;
+                    
+                    $offset = ($currentpage - 1) * $recordsPerPage;
+                    $results = $province->getAll($offset, $recordsPerPage); 
                     foreach ($results as $result) {
                     ?>
                     <tr>
@@ -37,9 +44,19 @@ $province = new province($db);
                 <?php } ?>
                 </tbody>
             </table>
+            <div style='padding-bottom: 10px; 'class="pagination">
+                <?php if ($currentpage > 1) : ?>
+                    <a style='padding-right: 20px; padding-bottom: 10px;'href="?page=<?php echo $currentpage - 1; ?>">&laquo; Previous</a>
+                <?php endif; ?>
+
+                <?php if ($currentpage < $totalPages) : ?>
+                    <a href="?page=<?php echo $currentpage + 1; ?>">Next &raquo;</a>
+                <?php endif; ?>
+            </div>
+            <a  href="../views/student_add.php">
+                <button class="btn btn-fill btn-danger">Add New Record</button>
+            </a>
         </div>
-        <a class="button-link" href="student_add.php">Add New Record</a>
     </div>
-    <p></p>
 </body>
 </html>

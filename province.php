@@ -8,15 +8,44 @@ class Province {
         $this->db = $db;
     }
 
-    public function getAll() {
+    public function getAll($offset, $limit) {
         try {
-            $sql = "SELECT * FROM province";
+            $sql = "SELECT * FROM province ORDER BY name ASC LIMIT :offset, :limit ";
             $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw $e; 
+        }
+    }
+    public function getTotalRowCount() {
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM province";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'];
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
+    public function displayAllWithLimit($offset, $limit) {
+        try {
+            $sql = "SELECT * FROM province LIMIT :offset, :limit";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
         }
     }
     public function getProvinceById($id) {
@@ -28,7 +57,6 @@ class Province {
         
             $stmt->execute(); 
         
-            // Fetch the city information
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();

@@ -1,5 +1,5 @@
 <?php
-include_once("db.php"); // Include the file with the Database class
+include_once("db.php");
 
 class StudentDetails {
     private $db;
@@ -11,7 +11,6 @@ class StudentDetails {
     // Create a student detail entry and link it to a student
     public function create($data) {
         try {
-            // Prepare the SQL INSERT statement
             $sql = "INSERT INTO student_details(student_id, contact_number, street, zip_code, town_city, province) VALUES(:student_id, :contact_number, :street, :zip_code, :town_city,:province);";
             $stmt = $this->db->getConnection()->prepare($sql);
 
@@ -22,11 +21,11 @@ class StudentDetails {
             $stmt->bindParam(':zip_code', $data['zip_code']);
             $stmt->bindParam(':town_city', $data['town_city']);
             $stmt->bindParam(':province', $data['province']);
+            
 
-            // Execute the INSERT query
+           
             $stmt->execute();
 
-            // Check if the insert was successful
             return $stmt->rowCount() > 0;
 
         } catch (PDOException $e) {

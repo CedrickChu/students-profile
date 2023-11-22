@@ -10,34 +10,59 @@ class Student {
 
     public function create($data) {
         try {
-            // Prepare the SQL INSERT statement
-            $sql = "INSERT INTO students(student_number, first_name, middle_name, last_name, gender, birthday) VALUES(:student_number, :first_name, :middle_name, :last_name, :gender, :birthday);";
-            $stmt = $this->db->getConnection()->prepare($sql);
+            $this->db->getConnection()->beginTransaction();
     
-            // Bind values to placeholders
-            $stmt->bindParam(':student_number', $data['student_number']);
-            $stmt->bindParam(':first_name', $data['first_name']);
-            $stmt->bindParam(':middle_name', $data['middle_name']);
-            $stmt->bindParam(':last_name', $data['last_name']);
-            $stmt->bindParam(':gender', $data['gender']);
-            $stmt->bindParam(':birthday', $data['birthday']);
+            $sqlStudents = "INSERT INTO students (student_number, first_name, middle_name, last_name, gender, birthday)
+                            VALUES (:student_number, :first_name, :middle_name, :last_name, :gender, :birthday)";
     
-            // Execute the INSERT query
-            $success = $stmt->execute();
+            $stmtStudent = $this->db->getConnection()->prepare($sqlStudents);
     
-            // Check if the insert was successful
-            if ($success) {
-                // Return the last inserted ID only if the statement was successfully executed
-                return $this->db->getConnection()->lastInsertId();
-            } else {
-                return null; // Return null if the insert was not successful
+            $stmtStudent->bindParam(':student_number', $data['student_number']);
+            $stmtStudent->bindParam(':first_name', $data['first_name']);
+            $stmtStudent->bindParam(':middle_name', $data['middle_name']);
+            $stmtStudent->bindParam(':last_name', $data['last_name']);
+            $stmtStudent->bindParam(':gender', $data['gender']);
+            $stmtStudent->bindParam(':birthday', $data['birthday']);
+    
+            $successStudent = $stmtStudent->execute();
+
+            if (!$successStudent) {
+                $this->db->getConnection()->rollBack();
+                return null;
             }
+
+            $lastInsertId = $this->db->getConnection()->lastInsertId();
+
+            $sqlDetails = "INSERT INTO student_details (student_id, contact_number, street, zip_code, town_city, province)
+                        VALUES (:student_id, :contact_number, :street, :zip_code, :town_city, :province)";
+
+            $stmtDetails = $this->db->getConnection()->prepare($sqlDetails);
+
+            $stmtDetails->bindParam(':student_id', $lastInsertId);
+            $stmtDetails->bindParam(':contact_number', $data['contact_number']);
+            $stmtDetails->bindParam(':street', $data['street']);
+            $stmtDetails->bindParam(':zip_code', $data['zip_code']);
+            $stmtDetails->bindParam(':town_city', $data['town_city']);
+            $stmtDetails->bindParam(':province', $data['province']);
+    
+            $successDetails = $stmtDetails->execute();
+    
+            if (!$successDetails) {
+                $this->db->getConnection()->rollBack();
+                return null;
+            }
+    
+            $this->db->getConnection()->commit();
+    
+            return $lastInsertId;
+    
         } catch (PDOException $e) {
-            // Handle any potential errors here
+            $this->db->getConnection()->rollBack();
             echo "Error: " . $e->getMessage();
-            throw $e; // Re-throw the exception for higher-level handling
+            throw $e; 
         }
     }
+    
     public function delete($id) {
         try {
             $this->db->getConnection()->beginTransaction();
@@ -78,7 +103,6 @@ class Student {
             $stmt->bindValue(':id', $id);
             $stmt->execute();
 
-            // Fetch the student data as an associative array
             $studentData = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $studentData;
@@ -129,7 +153,6 @@ class Student {
     
             return $stmt->rowCount() > 0;
         } catch (PDOException $e) {
-            // Handle any potential errors here
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
@@ -164,7 +187,7 @@ class Student {
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     
-            $stmt->execute(); // Execute the prepared statement
+            $stmt->execute(); 
     
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -173,9 +196,35 @@ class Student {
         }
     }
         
-    
+    public function getTotalRowCount() {
+        try {
+            $sql = "SELECT COUNT(*) AS total FROM students";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->execute();
 
-    public function displayAll(){
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['total'];
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
+    public function displayAllWithLimit($offset, $limit) {
+        try {
+            $sql = "SELECT * FROM students LIMIT :offset, :limit";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            throw $e;
+        }
+    }
+
+    public function displayAll($offset, $limit){
         try {
             $sql = "SELECT
                 s.id as id,
@@ -191,13 +240,16 @@ class Student {
                 students s
             JOIN
                 student_details sd ON s.id = sd.student_id
-            LIMIT 100";
+            LIMIT :offset, :limit";
+    
             $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->execute();
+    
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         } catch (PDOException $e) {
-            // Handle any potential errors here
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
