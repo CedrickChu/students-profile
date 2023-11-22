@@ -6,12 +6,12 @@ $connection = $db->getConnection();
 $student = new Student($db);
 
 $sql = "SELECT COUNT(*) as student_count, p.name as province_name
-FROM students s
-JOIN student_details sd ON s.id = sd.student_id
-JOIN province p ON p.id = sd.province
-GROUP BY p.id
-ORDER BY student_count DESC
-LIMIT 100;";
+        FROM students s
+        JOIN student_details sd ON s.id = sd.student_id
+        JOIN province p ON p.id = sd.province
+        GROUP BY p.id
+        ORDER BY student_count DESC
+        LIMIT 100;";
 
 $stmt = $connection->prepare($sql);
 $stmt->execute();
@@ -57,7 +57,8 @@ if (!empty($labels) && !empty($data)) {
                         'rgba(153, 102, 255, 0.8)',
                         'rgba(255, 159, 64, 0.8)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 1,
+                    hoverOffset: 4
                 }]
             },
             options: {
