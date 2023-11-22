@@ -7,7 +7,6 @@ $student = new Student($db);
 include '../record_table/base.php';
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
-
     $result = $student->getStudentById($id);
     if ($result) {
         ?>
@@ -43,11 +42,14 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             </select><br>
                         </div>
                         <div class='form-group'>
-                            <label for="birthday">Birthday:</label>
-                            <input class='form-control' type="date" id="start" name="trip-start"
-                                value="<?php echo date('Y-m-d', strtotime($result['birthday'])); ?>"
+                            <label for="birthday">BIRTHDAY:</label>
+                            <?php
+                                $birthday = $result['birthday'];
+                            ?>
+                            <input class='form-control' type="date" id="birthday" name="birthday"
+                                value="<?php echo $birthday; ?>"
                                 min="1960-01-01" max="2026-12-31" /><br>
-                        </div>
+                            </div>
                         <div class='form-group'>
                             <label for='contact_number'>CONTACT NUMBER: </label>
                             <input class='form-control' type='text' name='contact_number' value="<?php echo $result['contact_number']; ?>" required><br>
@@ -119,7 +121,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 </div>
                 <button class="btn btn-danger" type="submit" name="submit">Update</button>
             </form>
-
             <?php
                 if (isset($_POST['submit'])) {
                     try {
@@ -153,7 +154,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                         $result = $students->update($id, $data);
 
                         if ($result) {
-                            echo "<script>alert('Student record with ID: " . $id . " has been successfully edited!');</script>";
+                            echo "<script>alert('Student record with ID: " . $id . " has been successfully edited!');";
+                            echo "window.location.href = '../record_table/students.view.php';</script>";
                         } else {
                             echo "<script>alert('Error updating record.');</script>";
                         }

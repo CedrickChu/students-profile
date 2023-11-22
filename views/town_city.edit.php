@@ -32,7 +32,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 $updateResult = $city->update($id, $data);
 
                 if ($updateResult) {
-                    echo "<script>alert('TOWN CITY record with ID: " . $id . " has been successfully edited!');</script>";
+                    echo "<script>alert('TOWN CITY record with ID: " . $id . " has been successfully edited!');";
+                    echo "window.location.href = '../record_table/town_city.view.php';</script>";
                 } else {
                     echo "<script>alert('Error updating record.');</script>";
                 }

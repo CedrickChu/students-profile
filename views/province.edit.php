@@ -32,7 +32,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                     $updateResult = $provinceManager->update($id, $data); 
 
                     if ($updateResult) {
-                        echo "<script>alert('Province record with ID: " . $id . " has been successfully edited!');</script>";
+                        echo "<script>alert('Province record with ID: " . $id . " has been successfully edited!');";
+                        echo "window.location.href = '../record_table/province.view.php';</script>";
                     } else {
                         echo "<script>alert('Error updating record.');</script>";
                     }
