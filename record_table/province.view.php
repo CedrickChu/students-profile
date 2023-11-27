@@ -19,7 +19,7 @@ $province = new province($db);
                         <th class='text-center'>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="record-table">
                     <?php
                     $recordsPerPage = 10;
                     $totalRowCount = $province->getTotalRowCount();

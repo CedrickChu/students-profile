@@ -1,6 +1,11 @@
 <?php
 include_once("../db.php");
 include_once("../student.php");
+$includeHeader = true;
+
+
+include_once('base.php');
+
 $db = new Database();
 $connection = $db->getConnection();
 $student = new Student($db);
@@ -28,14 +33,13 @@ foreach ($results as $row) {
 
 <?php
 if (!empty($labels) && !empty($data)) {
-    include 'base.php';
     ?>
     <div class="content-center">
         <div class="container container-fluid mx-auto">
             <div class="card" style="width: 80rem; height: 80rem;">
                 <div class="card-body">
                     <h5 class="card-title">STUDENT STATISTIC</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">100 province who has most the student_count</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">100 province who has the most student_count</h6>
                     <canvas id="studentChart" width="1200" height="1200"></canvas>
                 </div>
             </div>

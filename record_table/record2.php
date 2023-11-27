@@ -35,8 +35,9 @@ foreach ($results as $row) {
 ?>
 
 <?php
+
 if (!empty($months) && (!empty($maleData) || !empty($femaleData))) {
-    include 'base.php';
+    include_once('base.php');
     ?>
     <div class="content-center">
         <div class="container container-fluid mx-auto">

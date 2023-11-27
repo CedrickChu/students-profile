@@ -18,7 +18,7 @@ $city = new TownCity($db);
                         <th class='text-center'>ACTION</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="record-table">
                     <?php
                     $recordsPerPage = 10;
                     $totalRowCount = $city->getTotalRowCount();
