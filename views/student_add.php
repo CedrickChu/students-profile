@@ -90,11 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']))
                         <label for="town_city">Town / City:</label>
                             <select class='form-control text-center' name="town_city" id="town_city" required><br>
                             <?php
-
                                 $database = new Database();
                                 $towns = new TownCity($database);
-                                $results = $towns->getAll($offset, $limit);
-                                // echo print_r($results);
+                                $results = $towns->showAll();
                                 foreach($results as $result)
                                 {
                                     echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
@@ -108,10 +106,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']))
                         <label for="province">Province:</label>
                             <select class='form-control text-center' name="province" id="province" required>
                             <?php
-
                                 $database = new Database();
                                 $provinces = new Province($database);
-                                $results = $provinces->getAll($offset, $limit);
+                                $results = $provinces->showAll();
                                 foreach($results as $result)
                                 {
                                     echo '<option value="' . $result['id'] . '">' . $result['name'] . '</option>';
@@ -131,7 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit']))
             <button class="btn btn-danger" type="submit" name="submit">SUBMIT</button>
         </form>
     </div>
-    <?php include('../templates/footer.html'); ?>
     <table id='data-table'></table>
 </body>
 </html>

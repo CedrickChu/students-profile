@@ -29,6 +29,20 @@ class TownCity {
             throw $e;
         }
     }
+    public function showAll() {
+        try {
+            $sql = "SELECT id, name FROM town_city ORDER BY name ASC";
+            $stmt = $this->db->getConnection()->prepare($sql);
+
+            $stmt->execute();
+    
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $result;
+        } catch (PDOException $e) {
+            throw $e;
+        }
+    }
     public function create($data){
         try {
             $sql = "INSERT INTO town_city (name) VALUES (:name)";

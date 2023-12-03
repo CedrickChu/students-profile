@@ -21,6 +21,17 @@ class Province {
             throw $e; 
         }
     }
+    public function showAll() {
+        try {
+            $sql = "SELECT * FROM province ORDER BY name ASC";
+            $stmt = $this->db->getConnection()->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw $e; 
+        }
+    }
     public function getTotalRowCount() {
         try {
             $sql = "SELECT COUNT(*) AS total FROM province";
